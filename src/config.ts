@@ -1,33 +1,27 @@
-import coffee from "coffee";
-
-const CONFIG_KEY_OUTPUT_DIRECTORY = "outputDirectory";
-const CONFIG_KEY_DENOM_VERSION = "denomVersion";
-const CONFIG_KEY_BINARY_NAME = "binaryName";
-const CONFIG_KEY_PACKAGE_INFO_FILE_NAME = "packageInfoFileName";
-const CONFIG_KEY_DENO_ENV = "deno.env";
-const CONFIG_KEY_DENO_DIR = "deno.env.DENO_DIR";
-
-const CONFIG_DEFAULT_DENO_DIR = "deno";
+const CONFIG_OUTPUT_DIRECTORY = "output";
+const CONFIG_DENOM_VERSION = "0.0.1";
+const CONFIG_BINARY_NAME = "denom";
+const CONFIG_PACKAGE_INFO_FILE_NAME = "denom.json";
+const CONFIG_DENO_ENV = {
+	DENO_DIR: "deno",
+	DENO_INSTALL_ROOT: "deno/bin",
+};
 
 export function getOutputDirectory(): string {
-	return coffee.get(CONFIG_KEY_OUTPUT_DIRECTORY).string();
+	return CONFIG_OUTPUT_DIRECTORY;
 }
 export function getDenomVersion(): string {
-	return coffee.get(CONFIG_KEY_DENOM_VERSION).string();
+	return CONFIG_DENOM_VERSION;
 }
 export function getBinaryName(): string {
-	return coffee.get(CONFIG_KEY_BINARY_NAME).string();
+	return CONFIG_BINARY_NAME;
 }
 export function getPackageInfoFileName(): string {
-	return coffee.get(CONFIG_KEY_PACKAGE_INFO_FILE_NAME).string();
+	return CONFIG_PACKAGE_INFO_FILE_NAME;
 }
 export function getDenoEnvDefault(): Record<string, string> {
-	return <Record<string, string>>coffee.get(CONFIG_KEY_DENO_ENV).value;
+	return <Record<string, string>>CONFIG_DENO_ENV;
 }
-
 export function getDenoDirectory(): string {
-	if (coffee.has(CONFIG_KEY_DENO_DIR)) {
-		return coffee.get(CONFIG_KEY_DENO_DIR).string();
-	}
-	return CONFIG_DEFAULT_DENO_DIR;
+	return CONFIG_DENO_ENV.DENO_DIR;
 }

@@ -1,5 +1,5 @@
 import { getPackageInfoFileName } from "../config.ts";
-
+import * as fs from "fs/mod.ts";
 type PkgEntryValueType = "string" | "number" | "boolean";
 
 interface PkgEntryType {
@@ -96,7 +96,49 @@ export async function loadPackage(packageInfoFilePath: string) {
 }
 
 export function getPackageInfo(key: string): PkgInfoValueType | undefined {
-	if (pkgInfo !== undefined) {
-		return pkgInfo.get(key);
+	return pkgInfo.get(key);
+}
+
+export function addPackageInfo(key: string, value: unknown): boolean {
+	// todo : validate key also
+	if (
+		typeof value === "string" ||
+		typeof value === "number" ||
+		typeof value === "boolean"
+	) {
+		pkgInfo.set(key, value);
+		return true;
 	}
+	return false;
+}
+
+function serializePackageInfo(dotNesting = true): string {
+	const objToSerialize: Record<string, PkgInfoValueType> = {};
+	for (const [key, value] of pkgInfo) {
+		const keys: string[] = key.split(".");
+		if (keys.length === 1 || !dotNesting) {
+			objToSerialize[key] = value;
+			continue;
+		}
+		// Handle dotted keys for nesting
+		let nestedTarget: Record<string, unknown> = objToSerialize;
+		let i = 0;
+		while (i < keys.length - 1) {
+			nestedTarget[keys[i]] = {};
+			nestedTarget = <Record<string, unknown>>nestedTarget[keys[i]];
+			i++;
+		}
+		nestedTarget[keys[i]] = value;
+	}
+	return JSON.stringify(objToSerialize);
+}
+
+export function generatePackageFile(): void {
+	const serializedInfo = serializePackageInfo();
+	const packageFile = getPackageInfoFileName();
+	Deno.writeTextFileSync(packageFile, serializedInfo);
+}
+
+export function packageInfoFileExists(): boolean {
+	return fs.existsSync(getPackageInfoFileName());
 }

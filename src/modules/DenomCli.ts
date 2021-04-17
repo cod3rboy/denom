@@ -1,4 +1,7 @@
+import { ProjectInitializer } from "./ProjectInitializer.ts";
 import { getVersionInfo } from "../utils/BuildInfo.ts";
+import { Confirm } from "prompt";
+
 // Commands and aliases mapping
 const commands = {
 	run: ["run", "-r"],
@@ -12,9 +15,19 @@ const commands = {
  *
  * @param args List of command line arguments
  */
-export function processArgs(args: string[]): void {
+export async function processArgs(args: string[]): Promise<void> {
 	if (args.length === 0) {
 		// No command
+		// Initialize New Project
+		const initializer = new ProjectInitializer();
+		let shouldInitialize = true;
+		if (initializer.hasInitialized()) {
+			// Take user confirmation before re-initializing
+			shouldInitialize = await Confirm.prompt(
+				"Project already initialized. Do you want to initialize again ?"
+			);
+		}
+		if (shouldInitialize) await initializer.init();
 	} else if (commands.run.includes(args[0])) {
 		// `run` command
 	} else if (commands.update.includes(args[0])) {

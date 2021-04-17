@@ -1,5 +1,7 @@
 import { download } from "download";
 import { readZip } from "jszip";
+import * as path from "path/mod.ts";
+import * as fs from "fs/mod.ts";
 
 const DENO_FILE_NAME = "deno-" + Deno.build.target + ".zip";
 const DENO_URL = `https://github.com/denoland/deno/releases/latest/download/${DENO_FILE_NAME}`;
@@ -18,11 +20,13 @@ export class DenoCliLoader {
 		}
 	}
 
-	async download(savePath?: string): Promise<string> {
+	async download(saveDir: string): Promise<string> {
 		try {
+			if (!fs.existsSync(saveDir))
+				Deno.mkdirSync(saveDir, { recursive: true });
 			// Downloading
 			const downloadFile = await download(this._downloadURL, {
-				dir: savePath,
+				dir: saveDir,
 				file: DENO_FILE_NAME,
 				mode: 0o777,
 			});
@@ -36,20 +40,17 @@ export class DenoCliLoader {
 
 	async unzip(
 		pathToZip: string,
-		removeAfterUnzip: true,
-		destinationPath?: string
+		removeAfterUnzip = true,
+		destinationDir?: string
 	): Promise<void> {
-		if (!destinationPath) {
-			try {
-				destinationPath = Deno.cwd();
-			} catch (err) {
-				destinationPath = "./";
-			}
-		}
 		try {
+			if (!destinationDir) {
+				destinationDir = path.dirname(pathToZip);
+			}
+			if (!fs.existsSync(destinationDir)) Deno.mkdirSync(destinationDir);
 			// Unzipping
 			const zipFile = await readZip(pathToZip);
-			await zipFile.unzip(destinationPath);
+			await zipFile.unzip(destinationDir);
 		} catch (err) {
 			throw new Error(
 				`Failed to unzip ${this._versionTag}! ${err.message}`
