@@ -1,16 +1,12 @@
-import {
-	DENO_SAVE_DIR,
-	DenoCliLoader,
-	DENO_BINARY_NAME,
-} from "../modules/DenoCliLoader.ts";
+import { DenoCliLoader } from "../modules/DenoCliLoader.ts";
 import { fileCheckSumMd5 } from "../utils/CheckSum.ts";
 import { assertEquals, assertNotEquals } from "testing/asserts.ts";
 import * as fs from "fs/mod.ts";
-import { PATH_SEPARATOR } from "../utils/Environment.ts";
-import { getOutputDirectory } from "../config.ts";
+import { PATH_SEPARATOR, DENO_BINARY_NAME } from "../utils/Environment.ts";
+import { getOutputDirectory, getDenoDirectory } from "../config.ts";
 
 function getDenoSaveDirectory(): string {
-	return `${Deno.cwd()}${PATH_SEPARATOR}${getOutputDirectory()}${PATH_SEPARATOR}${DENO_SAVE_DIR}`;
+	return `${Deno.cwd()}${PATH_SEPARATOR}${getOutputDirectory()}${PATH_SEPARATOR}${getDenoDirectory()}`;
 }
 
 Deno.test({

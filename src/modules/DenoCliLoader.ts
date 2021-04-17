@@ -1,14 +1,9 @@
-import { PATH_SEPARATOR, isWindowsOS } from "../utils/Environment.ts";
 import { download } from "download";
 import { readZip } from "jszip";
 
 const DENO_FILE_NAME = "deno-" + Deno.build.target + ".zip";
 const DENO_URL = `https://github.com/denoland/deno/releases/latest/download/${DENO_FILE_NAME}`;
 const DENO_VERSION_URL = `https://github.com/denoland/deno/releases/download/{version}/${DENO_FILE_NAME}`;
-
-export const DENO_SAVE_DIR = "deno" + PATH_SEPARATOR + "bin";
-export const DENO_BINARY_NAME = isWindowsOS() ? "deno.exe" : "deno";
-
 export class DenoCliLoader {
 	_downloadURL: string;
 	_versionTag: string;
@@ -56,7 +51,9 @@ export class DenoCliLoader {
 			const zipFile = await readZip(pathToZip);
 			await zipFile.unzip(destinationPath);
 		} catch (err) {
-			throw new Error(`Failed to unzip ${this._versionTag}!`);
+			throw new Error(
+				`Failed to unzip ${this._versionTag}! ${err.message}`
+			);
 		}
 		if (removeAfterUnzip) await Deno.remove(pathToZip);
 	}
