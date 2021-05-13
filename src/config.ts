@@ -1,7 +1,7 @@
 const CONFIG_OUTPUT_DIRECTORY = "output";
 const CONFIG_DENOM_VERSION = "0.0.1";
 const CONFIG_BINARY_NAME = "denom";
-const CONFIG_PACKAGE_INFO_FILE_NAME = "denom.json";
+const CONFIG_PACKAGE_FILE_NAME = "denom.json";
 const CONFIG_DENO_ENV = {
 	DENO_DIR: "deno",
 	DENO_INSTALL_ROOT: "deno/bin",
@@ -16,8 +16,8 @@ export function getDenomVersion(): string {
 export function getBinaryName(): string {
 	return CONFIG_BINARY_NAME;
 }
-export function getPackageInfoFileName(): string {
-	return CONFIG_PACKAGE_INFO_FILE_NAME;
+export function getPackageFileName(): string {
+	return CONFIG_PACKAGE_FILE_NAME;
 }
 export function getDenoEnvDefault(): Record<string, string> {
 	return <Record<string, string>>CONFIG_DENO_ENV;

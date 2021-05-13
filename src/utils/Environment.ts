@@ -1,18 +1,19 @@
-import { getDenoEnvDefault } from "../config.ts";
+import { getDenoEnvDefault, getDenoDirectory } from "../config.ts";
+import { SEP } from "path/mod.ts";
 
 // Determine the path separator of host operating system
-let pathSeparator = "";
-switch (Deno.build.os) {
-	case "linux":
-	case "darwin":
-		pathSeparator = "/";
-		break;
-	case "windows":
-		pathSeparator = "\\";
-		break;
-	default:
-		throw Error("Unexpected platform : " + Deno.build.os);
-}
+// let pathSeparator: "/" |"\\";
+// switch (Deno.build.os) {
+// 	case "linux":
+// 	case "darwin":
+// 		pathSeparator = "/";
+// 		break;
+// 	case "windows":
+// 		pathSeparator = "\\";
+// 		break;
+// 	default:
+// 		throw Error("Unexpected platform : " + Deno.build.os);
+// }
 export const isWindowsOS = () => Deno.build.os === "windows";
 export const isLinuxOS = () => Deno.build.os === "linux";
 export const isDarwinOS = () => Deno.build.os === "darwin";
@@ -21,7 +22,8 @@ export function getBuildTarget(): string {
 	return Deno.build.target;
 }
 
-export const PATH_SEPARATOR = pathSeparator;
+export const PATH_SEPARATOR = SEP;
+
 export const DENO_BINARY_NAME = isWindowsOS() ? "deno.exe" : "deno";
 
 // Load map of Deno Environment Variables and their values
@@ -44,4 +46,8 @@ export function getEnvironmentVariablesForDeno(): EnvironmentVariableMapping {
 
 export function getEnvironmentVariableForDeno(key: string): string | undefined {
 	return denoEnvMap.get(key);
+}
+
+export function getDenoBinaryPath(): string {
+	return getDenoDirectory() + PATH_SEPARATOR + DENO_BINARY_NAME;
 }

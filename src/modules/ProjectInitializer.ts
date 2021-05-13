@@ -9,7 +9,10 @@ import {
 	generatePackageFile,
 	packageInfoFileExists,
 	addPackageInfo,
+	getPackageInfoFileName,
 } from "./PackageInfo.ts";
+import { lazer } from "lazer";
+
 export class ProjectInitializer {
 	hasInitialized(): boolean {
 		// Check package file in current working directory
@@ -17,19 +20,20 @@ export class ProjectInitializer {
 		return packageInfoFileExists();
 	}
 	async init(): Promise<void> {
-		console.log("Initializing project ...");
 		// Generate package file
 		const projectInfoFromConsole = await this.showPrompt();
 		for (const [key, value] of projectInfoFromConsole) {
 			addPackageInfo(key, value);
 		}
+		lazer().print_green_ln(`Generating ${getPackageInfoFileName()} ...`);
 		generatePackageFile();
-
 		// Load Deno Cli
 		const denoCliLoader = new DenoCliLoader();
+		lazer().print_green_ln(`Downloading deno cli ...`);
 		const denoCliZipPath = await denoCliLoader.download(getDenoDirectory());
+		lazer().print_green_ln(`Unzipping deno cli ...`);
 		await denoCliLoader.unzip(denoCliZipPath);
-		console.log("DONE!");
+		lazer().print_green_ln(`Go and make an awesome project!`);
 	}
 	async showPrompt(): Promise<Map<string, unknown>> {
 		// Project initialization questions

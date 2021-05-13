@@ -1,19 +1,22 @@
 {
-	"imports": {
-		"checksum": "https://deno.land/x/checksum/mod.ts",
-		"download": "https://deno.land/x/download/mod.ts",
-		"fs/": "https://deno.land/std/fs/",
-		"jszip": "https://deno.land/x/jszip/mod.ts",
-		"path/": "https://deno.land/std/path/",
-		"testing/": "https://deno.land/std/testing/",
-		"prompt": "https://deno.land/x/cliffy/prompt/mod.ts"
-	},
-	"hash": {
-		"checksum": "b3dfc8efbfef9710d53603c76c15dd2820cdff92484b3d2f3b352d9126771052",
-		"download": "8a1379bc8fc26cca3467453197607027723cea02fe7b9f038d30832825675c92",
-		"fs/": "019ac757ed33f1d51f5233d5a322156e556e44d309ed4528b5d6658705576619",
-		"jszip": "f6fa9ece7d545012db6327adc29556fcb2365efef038ce62b86ef0eb95b5cad8",
-		"path/": "68d846cb0192166f1c0cfa7ef0f3e35ae7addf2fd0b923d5e810ae39a8196e3b",
-		"testing/": "0f8316a55f8d695bb70fc10ac93813086ab5239cb2da3f9cbbbaed2da8b3c0d2"
-	}
+  "imports": {
+    "checksum": "https://deno.land/x/checksum/mod.ts",
+    "download": "https://deno.land/x/download/mod.ts",
+    "fs/": "https://deno.land/std/fs/",
+    "jszip": "https://deno.land/x/jszip/mod.ts",
+    "lazer": "https://deno.land/x/lazer/mod.ts",
+    "path/": "https://deno.land/std/path/",
+    "prompt": "https://deno.land/x/cliffy/prompt/mod.ts",
+    "testing/": "https://deno.land/std/testing/"
+  },
+  "hash": {
+    "checksum": "b3dfc8efbfef9710d53603c76c15dd2820cdff92484b3d2f3b352d9126771052",
+    "download": "8a1379bc8fc26cca3467453197607027723cea02fe7b9f038d30832825675c92",
+    "fs/": "019ac757ed33f1d51f5233d5a322156e556e44d309ed4528b5d6658705576619",
+    "jszip": "f6fa9ece7d545012db6327adc29556fcb2365efef038ce62b86ef0eb95b5cad8",
+    "path/": "68d846cb0192166f1c0cfa7ef0f3e35ae7addf2fd0b923d5e810ae39a8196e3b",
+    "testing/": "0f8316a55f8d695bb70fc10ac93813086ab5239cb2da3f9cbbbaed2da8b3c0d2",
+    "prompt": "568c78ce63b11c246d2a5bd6a0469b0ced69250028c846a30f7b2073a131cff7",
+    "lazer": "f8499649fef0f9551568397b31bd316d3ab4657262403af11d8b95ba7f927c5a"
+  }
 }
