@@ -5,7 +5,6 @@ import {
 
 const COMMAND_DENO_RUN = "run";
 
-// TODO fix error : Access is denied. (os error 5)
 export async function execute(
 	scriptPath: string,
 	scriptArgs?: string[],
@@ -20,9 +19,6 @@ export async function execute(
 
 	// Environment variables mapping
 	const envMapping = getEnvironmentVariablesForDeno();
-
-	// TODO remove this DEBUG LINE
-	console.log("Executing command : " + cmdArgs.join(" "));
 
 	// Pass env for deno environment variables
 	const scriptProcess = Deno.run({
